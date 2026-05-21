@@ -23,6 +23,7 @@
     --atendimento: #6a9e6a;
     --visita:    #9e6a9e;
     --familia:   #c9963c;
+    --reuniao:   #6a8fa5;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'Crimson Pro',Georgia,serif; font-size:17px; min-height:100vh; }
@@ -46,6 +47,7 @@
   .dot-atendimento { background:var(--atendimento); }
   .dot-visita { background:var(--visita); }
   .dot-familia { background:var(--familia); }
+  .dot-reuniao { background:var(--reuniao); }
   .spacer { flex:1; }
   .btn-add { background:var(--gold); border:none; color:#0d0b14; padding:8px 18px; border-radius:6px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; font-weight:700; transition:all 0.2s; white-space:nowrap; }
   .btn-add:hover { background:var(--gold-light); }
@@ -121,6 +123,8 @@
   .toast { position:fixed; bottom:20px; right:20px; background:var(--surface2); border:1px solid var(--gold); color:var(--gold-light); padding:9px 15px; border-radius:7px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:.08em; z-index:200; opacity:0; transform:translateY(8px); transition:all .25s; pointer-events:none; }
   .toast.show { opacity:1; transform:translateY(0); }
 
+  .btn-agenda { display:inline-flex; align-items:center; gap:5px; margin-top:8px; background:rgba(201,150,60,0.08); border:1px solid rgba(201,150,60,0.25); color:var(--gold); padding:5px 12px; border-radius:5px; text-decoration:none; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; cursor:pointer; transition:all 0.2s; }
+  .btn-agenda:hover { background:rgba(201,150,60,0.16); border-color:var(--gold); }
   .tambor-badge { display:inline-flex; align-items:center; gap:4px; margin-top:5px; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; padding:2px 9px; border-radius:20px; }
   .tambor-confirmado { background:rgba(106,158,106,0.12); border:1px solid rgba(106,158,106,0.3); color:#8ecf8e; }
   .tambor-arrecadacao { background:rgba(201,150,60,0.12); border:1px solid rgba(201,150,60,0.3); color:var(--gold); }
@@ -164,6 +168,7 @@
   <button class="filter-btn" id="fAtendimento" onclick="setFiltro('Atendimento')"><span class="dot dot-atendimento"></span>Atendimento</button>
   <button class="filter-btn" id="fVisita" onclick="setFiltro('Visita')"><span class="dot dot-visita"></span>Visita</button>
   <button class="filter-btn" id="fFamilia" onclick="setFiltro('Familia')"><span class="dot dot-familia"></span>Família</button>
+  <button class="filter-btn" id="fReuniao" onclick="setFiltro('Reuniao')"><span class="dot dot-reuniao"></span>Reunião</button>
   <div class="spacer"></div>
   <input type="file" id="icsInput" accept=".ics" style="display:none" onchange="importarICS(this)">
   <button class="btn-import" onclick="document.getElementById('icsInput').click()">⬆ Importar .ics</button>
@@ -205,6 +210,7 @@
         <option value="Atendimento">Sessão com Atendimento</option>
         <option value="Visita">Sessão de Visita</option>
         <option value="Familia">Sessão da Família</option>
+        <option value="Reuniao">Reunião</option>
       </select>
     </div>
     <div class="form-row">
@@ -270,7 +276,7 @@
   let viewMonth = hoje.getMonth();
 
   const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  const TIPO_LABEL = { Interna:'Sessão Interna', Atendimento:'Sessão com Atendimento', Visita:'Sessão de Visita', Familia:'Sessão da Família' };
+  const TIPO_LABEL = { Interna:'Sessão Interna', Atendimento:'Sessão com Atendimento', Visita:'Sessão de Visita', Familia:'Sessão da Família', Reuniao:'Reunião' };
 
 
   // ---- IMPORTAR ICS ----
@@ -453,6 +459,52 @@
     toast(`${ok} sessão(ões) importada(s)!${err ? ' ' + err + ' erros.' : ''}`);
   };
 
+
+  function gerarICS(s) {
+    const [y, m, d] = s.data.split('-');
+    const hora = s.hora || '20:30';
+    const [h, min] = hora.split(':');
+    const pad = n => String(n).padStart(2,'0');
+
+    const dtstart = `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
+    // End time: +2 hours
+    const endH = parseInt(h) + 2;
+    const dtend = `${y}${pad(m)}${pad(d)}T${pad(endH)}${pad(min)}00`;
+
+    const desc = [
+      s.tipo ? `Tipo: ${TIPO_LABEL[s.tipo]||s.tipo}` : '',
+      s.tambor ? ({confirmado:'Tambor: Confirmado', arrecadacao:'Tambor: Depende de arrecadação', nao:'Tambor: Não vai ter'}[s.tambor]||'') : '',
+      s.responsavel ? `Responsável: ${s.responsavel}` : '',
+      s.descricao || ''
+    ].filter(Boolean).join('\n');
+
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Bolhas de Luz//Calendario//PT',
+      'BEGIN:VEVENT',
+      `DTSTART;TZID=America/Sao_Paulo:${dtstart}`,
+      `DTEND;TZID=America/Sao_Paulo:${dtend}`,
+      `SUMMARY:${s.nome}`,
+      `DESCRIPTION:${desc.replace(/
+/g,'\n')}`,
+      'LOCATION:Terreiro Bolhas de Luz',
+      `UID:${s.id}@bolhasdeluz`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('
+');
+
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${s.nome.replace(/[^a-z0-9]/gi,'-')}.ics`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  window.gerarICS = gerarICS;
+
   // ---- LOAD ----
   async function load() {
     try {
@@ -469,7 +521,7 @@
     filtroTipo = tipo;
     selectedDate = null;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    const map = {'':'fTodos','Interna':'fInterna','Atendimento':'fAtendimento','Visita':'fVisita','Familia':'fFamilia'};
+    const map = {'':'fTodos','Interna':'fInterna','Atendimento':'fAtendimento','Visita':'fVisita','Familia':'fFamilia','Reuniao':'fReuniao'};
     document.getElementById(map[tipo]).classList.add('active');
     renderLista();
   };
@@ -547,6 +599,7 @@
           </div>
           ${s.descricao ? `<div class="si-desc">${esc(s.descricao)}</div>` : ''}
           ${s.responsavel ? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
+        <button class="btn-agenda" onclick="gerarICS(${JSON.stringify(s).replace(/"/g,'&quot;')})">📅 Adicionar à agenda</button>
         </div>`;
       });
     });
