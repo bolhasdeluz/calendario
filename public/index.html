@@ -123,8 +123,6 @@
   .toast { position:fixed; bottom:20px; right:20px; background:var(--surface2); border:1px solid var(--gold); color:var(--gold-light); padding:9px 15px; border-radius:7px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:.08em; z-index:200; opacity:0; transform:translateY(8px); transition:all .25s; pointer-events:none; }
   .toast.show { opacity:1; transform:translateY(0); }
 
-  .btn-agenda { display:inline-flex; align-items:center; gap:5px; margin-top:8px; background:rgba(201,150,60,0.08); border:1px solid rgba(201,150,60,0.25); color:var(--gold); padding:5px 12px; border-radius:5px; text-decoration:none; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; cursor:pointer; transition:all 0.2s; }
-  .btn-agenda:hover { background:rgba(201,150,60,0.16); border-color:var(--gold); }
   .tambor-badge { display:inline-flex; align-items:center; gap:4px; margin-top:5px; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; padding:2px 9px; border-radius:20px; }
   .tambor-confirmado { background:rgba(106,158,106,0.12); border:1px solid rgba(106,158,106,0.3); color:#8ecf8e; }
   .tambor-arrecadacao { background:rgba(201,150,60,0.12); border:1px solid rgba(201,150,60,0.3); color:var(--gold); }
@@ -590,13 +588,13 @@
               </div>
             </div>
             <div class="si-actions">
+              <button class="icon-btn agenda" onclick="gerarICS('${s.id}')" title="Adicionar à agenda">📅</button>
               <button class="icon-btn" onclick="openEdit('${s.id}')" title="Editar">✎</button>
               <button class="icon-btn del" onclick="deletar('${s.id}')" title="Excluir">✕</button>
             </div>
           </div>
           ${s.descricao ? `<div class="si-desc">${esc(s.descricao)}</div>` : ''}
           ${s.responsavel ? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
-        <button class="btn-agenda" onclick="gerarICS('${s.id}')">📅 Adicionar à agenda</button>
         </div>`;
       });
     });
