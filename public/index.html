@@ -461,6 +461,33 @@
   function gerarICS(id) {
     const s = sessoes.find(x => x.id === id);
     if (!s) return;
+
+    const isAndroid = /android/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+      // Android: abre direto no Google Calendar
+      const [y, m, d] = s.data.split('-');
+      const hora = s.hora || '20:30';
+      const [h, min] = hora.split(':');
+      const pad = n => String(n).padStart(2,'0');
+      const dtstart = `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
+      const endH = String(parseInt(h) + 2).padStart(2,'0');
+      const dtend = `${y}${pad(m)}${pad(d)}T${endH}${pad(min)}00`;
+      const details = [
+        s.tipo ? ('Tipo: ' + (TIPO_LABEL[s.tipo]||s.tipo)) : '',
+        s.responsavel ? ('Responsável: ' + s.responsavel) : '',
+        s.descricao || ''
+      ].filter(Boolean).join(' | ');
+      const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+        + '&text=' + encodeURIComponent(s.nome)
+        + '&dates=' + dtstart + '/' + dtend
+        + '&details=' + encodeURIComponent(details)
+        + '&location=' + encodeURIComponent('Terreiro Bolhas de Luz');
+      window.open(url, '_blank');
+      return;
+    }
+
+    // iOS e desktop: baixa .ics
     const [y, m, d] = s.data.split('-');
     const hora = s.hora || '20:30';
     const [h, min] = hora.split(':');
