@@ -490,11 +490,13 @@
   }
 
   // ---- LISTA LATERAL ----
+  const DIAS_SEMANA = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  const TAMBOR_LABEL = { confirmado:'✅ Tambor confirmado', arrecadacao:'🪘 Depende de arrecadação', nao:'❌ Sem tambor' };
+
   function renderLista() {
     const todayStr = fmtDate(hoje);
     let lista = sessoes.filter(s => {
       if (filtroTipo && s.tipo !== filtroTipo) return false;
-      if (selectedDate) return s.data === selectedDate;
       return s.data >= todayStr;
     });
 
@@ -504,27 +506,52 @@
       return;
     }
 
-    el.innerHTML = lista.map(s => {
-      const [y,m,d] = s.data.split('-');
-      const tipoClass = 'tipo-' + (s.tipo||'').toLowerCase();
-      return `
-      <div class="sessao-item ${tipoClass}">
-        <div class="si-header">
-          <div>
-            <div class="si-date">${d}/${m}/${y}${s.hora ? ' · ' + s.hora : ''}</div>
-            <div class="si-name">${esc(s.nome)}</div>
-            <div class="si-tipo ${tipoClass}">${TIPO_LABEL[s.tipo]||s.tipo}</div>
-            ${s.tambor ? `<div class="tambor-badge tambor-${s.tambor}">${{confirmado:'✅ Tambor confirmado', arrecadacao:'🪘 Depende de arrecadação', nao:'❌ Sem tambor'}[s.tambor]||''}</div>` : ''}
+    // Agrupa por mês
+    const grupos = {};
+    lista.forEach(s => {
+      const mesKey = s.data.slice(0, 7);
+      if (!grupos[mesKey]) grupos[mesKey] = [];
+      grupos[mesKey].push(s);
+    });
+
+    let html = '';
+    Object.keys(grupos).sort().forEach(mesKey => {
+      const [y, m] = mesKey.split('-');
+      html += `<div class="mes-header">${MESES[parseInt(m)-1]} ${y}</div>`;
+      grupos[mesKey].forEach(s => {
+        const [sy, sm, sd] = s.data.split('-');
+        const dataObj = new Date(parseInt(sy), parseInt(sm)-1, parseInt(sd));
+        const dow = DIAS_SEMANA[dataObj.getDay()];
+        const tipoClass = 'tipo-' + (s.tipo||'').toLowerCase();
+        html += `
+        <div class="sessao-item ${tipoClass}">
+          <div class="si-header">
+            <div style="display:flex;gap:12px;align-items:center;flex:1;min-width:0">
+              <div class="si-date">
+                <div class="si-day-num">${sd}</div>
+                <div class="si-day-info">
+                  <div class="si-dow">${dow}</div>
+                  <div class="si-time">${s.hora||''}</div>
+                </div>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div class="si-name">${esc(s.nome)}</div>
+                <div class="si-tipo ${tipoClass}">${TIPO_LABEL[s.tipo]||s.tipo||''}</div>
+                ${s.tambor ? `<div class="tambor-badge tambor-${s.tambor}">${TAMBOR_LABEL[s.tambor]||''}</div>` : ''}
+              </div>
+            </div>
+            <div class="si-actions">
+              <button class="icon-btn" onclick="openEdit('${s.id}')" title="Editar">✎</button>
+              <button class="icon-btn del" onclick="deletar('${s.id}')" title="Excluir">✕</button>
+            </div>
           </div>
-          <div class="si-actions">
-            <button class="icon-btn" onclick="openEdit('${s.id}')" title="Editar">✎</button>
-            <button class="icon-btn del" onclick="deletar('${s.id}')" title="Excluir">✕</button>
-          </div>
-        </div>
-        ${s.descricao ? `<div class="si-desc">${esc(s.descricao)}</div>` : ''}
-        ${s.responsavel ? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
-      </div>`;
-    }).join('');
+          ${s.descricao ? `<div class="si-desc">${esc(s.descricao)}</div>` : ''}
+          ${s.responsavel ? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
+        </div>`;
+      });
+    });
+
+    el.innerHTML = html;
   }
 
   // ---- MODAL ----
