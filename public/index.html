@@ -460,7 +460,9 @@
   };
 
 
-  function gerarICS(s) {
+  function gerarICS(id) {
+    const s = sessoes.find(x => x.id === id);
+    if (!s) return;
     const [y, m, d] = s.data.split('-');
     const hora = s.hora || '20:30';
     const [h, min] = hora.split(':');
@@ -599,7 +601,7 @@
           </div>
           ${s.descricao ? `<div class="si-desc">${esc(s.descricao)}</div>` : ''}
           ${s.responsavel ? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
-        <button class="btn-agenda" onclick="gerarICS(${JSON.stringify(s).replace(/"/g,'&quot;')})">📅 Adicionar à agenda</button>
+        <button class="btn-agenda" onclick="gerarICS('${s.id}')">📅 Adicionar à agenda</button>
         </div>`;
       });
     });
