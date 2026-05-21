@@ -467,41 +467,36 @@
     const hora = s.hora || '20:30';
     const [h, min] = hora.split(':');
     const pad = n => String(n).padStart(2,'0');
-
     const dtstart = `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
-    // End time: +2 hours
-    const endH = parseInt(h) + 2;
-    const dtend = `${y}${pad(m)}${pad(d)}T${pad(endH)}${pad(min)}00`;
-
+    const endH = String(parseInt(h) + 2).padStart(2,'0');
+    const dtend = `${y}${pad(m)}${pad(d)}T${endH}${pad(min)}00`;
+    const TAMBOR_L = {confirmado:'Tambor: Confirmado', arrecadacao:'Tambor: Depende de arrecadacao', nao:'Tambor: Nao vai ter'};
     const desc = [
-      s.tipo ? `Tipo: ${TIPO_LABEL[s.tipo]||s.tipo}` : '',
-      s.tambor ? ({confirmado:'Tambor: Confirmado', arrecadacao:'Tambor: Depende de arrecadação', nao:'Tambor: Não vai ter'}[s.tambor]||'') : '',
-      s.responsavel ? `Responsável: ${s.responsavel}` : '',
+      s.tipo ? ('Tipo: ' + (TIPO_LABEL[s.tipo]||s.tipo)) : '',
+      s.tambor ? (TAMBOR_L[s.tambor]||'') : '',
+      s.responsavel ? ('Responsavel: ' + s.responsavel) : '',
       s.descricao || ''
-    ].filter(Boolean).join('\n');
-
+    ].filter(Boolean).join('\\n');
+    const CRLF = '\r\n';
     const ics = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
       'PRODID:-//Bolhas de Luz//Calendario//PT',
       'BEGIN:VEVENT',
-      `DTSTART;TZID=America/Sao_Paulo:${dtstart}`,
-      `DTEND;TZID=America/Sao_Paulo:${dtend}`,
-      `SUMMARY:${s.nome}`,
-      `DESCRIPTION:${desc.replace(/
-/g,'\n')}`,
+      'DTSTART;TZID=America/Sao_Paulo:' + dtstart,
+      'DTEND;TZID=America/Sao_Paulo:' + dtend,
+      'SUMMARY:' + s.nome,
+      'DESCRIPTION:' + desc,
       'LOCATION:Terreiro Bolhas de Luz',
-      `UID:${s.id}@bolhasdeluz`,
+      'UID:' + s.id + '@bolhasdeluz',
       'END:VEVENT',
       'END:VCALENDAR'
-    ].join('
-');
-
+    ].join(CRLF);
     const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${s.nome.replace(/[^a-z0-9]/gi,'-')}.ics`;
+    a.download = s.nome.replace(/[^a-z0-9]/gi, '-') + '.ics';
     a.click();
     URL.revokeObjectURL(url);
   }
