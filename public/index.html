@@ -51,30 +51,12 @@
   .btn-add:hover { background:var(--gold-light); }
 
   /* MAIN LAYOUT */
-  .main { max-width:960px; margin:18px auto 60px; padding:0 16px; display:grid; grid-template-columns:1fr 320px; gap:16px; }
-  @media(max-width:700px) { .main { grid-template-columns:1fr; } }
-
-  /* CALENDAR */
-  .cal-wrap { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
-  .cal-nav { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border); }
-  .cal-nav button { background:none; border:1px solid var(--border); color:var(--text-dim); width:28px; height:28px; border-radius:5px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-  .cal-nav button:hover { border-color:var(--gold); color:var(--gold); }
-  .cal-month { font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.1em; color:var(--gold-light); text-transform:uppercase; }
-  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); }
-  .cal-dow { text-align:center; padding:10px 4px 8px; font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.12em; color:var(--text-dim); text-transform:uppercase; }
-  .cal-day { min-height:52px; border-top:1px solid var(--border); border-right:1px solid var(--border); padding:5px 6px; cursor:pointer; transition:background 0.15s; position:relative; }
-  .cal-day:nth-child(7n) { border-right:none; }
-  .cal-day:hover { background:rgba(201,150,60,0.06); }
-  .cal-day.other-month { opacity:0.3; cursor:default; }
-  .cal-day.today .day-num { background:var(--gold); color:#0d0b14; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:700; }
-  .cal-day.selected { background:var(--gold-dim); }
-  .day-num { font-family:'Cinzel',serif; font-size:11px; color:var(--text-dim); width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
-  .day-dots { display:flex; flex-wrap:wrap; gap:2px; margin-top:3px; }
-  .day-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+  .main { max-width:720px; margin:18px auto 60px; padding:0 16px; }
 
   /* SIDEBAR LIST */
-  .sidebar { display:flex; flex-direction:column; gap:10px; }
-  .sidebar-title { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.12em; color:var(--text-dim); text-transform:uppercase; padding:0 2px; }
+  .sessoes-list { display:flex; flex-direction:column; gap:8px; }
+  .mes-header { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.18em; color:var(--gold); text-transform:uppercase; padding:16px 2px 6px; border-bottom:1px solid var(--border); margin-bottom:2px; }
+  .mes-header:first-child { padding-top:4px; }
 
   .sessao-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 14px; border-left:3px solid var(--gold); transition:all 0.2s; animation:fadeIn 0.25s ease both; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
@@ -85,7 +67,11 @@
   .sessao-item.tipo-familia { border-left-color:var(--familia); }
 
   .si-header { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
-  .si-date { font-family:'Cinzel',serif; font-size:9px; color:var(--text-dim); letter-spacing:0.08em; margin-bottom:3px; }
+  .si-date { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  .si-day-num { font-family:'Cinzel',serif; font-size:22px; font-weight:700; color:var(--gold-light); line-height:1; }
+  .si-day-info { display:flex; flex-direction:column; gap:1px; }
+  .si-dow { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.12em; color:var(--gold); text-transform:uppercase; }
+  .si-time { font-family:'Cinzel',serif; font-size:9px; color:var(--text-dim); letter-spacing:0.08em; }
   .si-name { font-family:'Cinzel',serif; font-size:13px; color:var(--gold-light); line-height:1.2; }
   .si-tipo { font-size:9px; font-family:'Cinzel',serif; letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; opacity:0.7; }
   .si-tipo.tipo-interna { color:var(--interna); }
@@ -176,28 +162,8 @@
 </div>
 
 <div class="main">
-  <!-- CALENDÁRIO -->
-  <div class="cal-wrap">
-    <div class="cal-nav">
-      <button onclick="mudarMes(-1)">‹</button>
-      <span class="cal-month" id="calMonth"></span>
-      <button onclick="mudarMes(1)">›</button>
-    </div>
-    <div class="cal-grid" id="calGrid">
-      <div class="cal-dow">Dom</div>
-      <div class="cal-dow">Seg</div>
-      <div class="cal-dow">Ter</div>
-      <div class="cal-dow">Qua</div>
-      <div class="cal-dow">Qui</div>
-      <div class="cal-dow">Sex</div>
-      <div class="cal-dow">Sáb</div>
-    </div>
-  </div>
-
-  <!-- LISTA LATERAL -->
-  <div class="sidebar">
-    <div class="sidebar-title" id="sidebarTitle">Próximas sessões</div>
-    <div id="sidebarList"><div class="loading"><div class="spinner"></div></div></div>
+  <div class="sessoes-list" id="sidebarList">
+    <div class="loading"><div class="spinner"></div></div>
   </div>
 </div>
 
@@ -472,7 +438,6 @@
 
     sessoes.sort((a,b)=>a.data.localeCompare(b.data));
     fecharImport();
-    renderCalendario();
     renderLista();
     btn.textContent = 'Importar selecionados';
     btn.disabled = false;
@@ -484,7 +449,6 @@
     try {
       const res = await fetch(API);
       sessoes = await res.json();
-      renderCalendario();
       renderLista();
     } catch(e) {
       document.getElementById('sidebarList').innerHTML = '<div class="empty">Erro ao carregar.</div>';
@@ -498,72 +462,21 @@
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     const map = {'':'fTodos','Interna':'fInterna','Atendimento':'fAtendimento','Visita':'fVisita','Familia':'fFamilia'};
     document.getElementById(map[tipo]).classList.add('active');
-    renderCalendario();
     renderLista();
   };
 
-  // ---- CALENDÁRIO ----
+  // ---- CALENDÁRIO (removido) ----
   window.mudarMes = (d) => {
     viewMonth += d;
     if (viewMonth > 11) { viewMonth = 0; viewYear++; }
     if (viewMonth < 0)  { viewMonth = 11; viewYear--; }
     selectedDate = null;
-    renderCalendario();
     renderLista();
   };
 
-  function renderCalendario() {
-    document.getElementById('calMonth').textContent = `${MESES[viewMonth]} ${viewYear}`;
-
-    const grid = document.getElementById('calGrid');
-    // remove day cells only (keep headers)
-    const headers = Array.from(grid.querySelectorAll('.cal-dow'));
-    grid.innerHTML = '';
-    headers.forEach(h => grid.appendChild(h));
-
-    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-    const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
-    const daysInPrev = new Date(viewYear, viewMonth, 0).getDate();
-
-    const todayStr = fmtDate(hoje);
-
-    // Prev month padding
-    for (let i = firstDay - 1; i >= 0; i--) {
-      const d = document.createElement('div');
-      d.className = 'cal-day other-month';
-      d.innerHTML = `<div class="day-num">${daysInPrev - i}</div>`;
-      grid.appendChild(d);
-    }
-
-    // Current month
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = `${viewYear}-${String(viewMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-      const daySessoes = sessoes.filter(s => s.data === dateStr && (!filtroTipo || s.tipo === filtroTipo));
-
-      const d = document.createElement('div');
-      d.className = 'cal-day' + (dateStr === todayStr ? ' today' : '') + (dateStr === selectedDate ? ' selected' : '');
-      d.onclick = () => selectDay(dateStr);
-
-      let dotsHtml = daySessoes.map(s => `<span class="day-dot" style="background:var(--${s.tipo.toLowerCase()},var(--gold))"></span>`).join('');
-
-      d.innerHTML = `<div class="day-num">${day}</div><div class="day-dots">${dotsHtml}</div>`;
-      grid.appendChild(d);
-    }
-
-    // Next month padding
-    const totalCells = firstDay + daysInMonth;
-    const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
-    for (let i = 1; i <= remaining; i++) {
-      const d = document.createElement('div');
-      d.className = 'cal-day other-month';
-      d.innerHTML = `<div class="day-num">${i}</div>`;
-      grid.appendChild(d);
-    }
-  }
 
   function selectDay(dateStr) {
     selectedDate = selectedDate === dateStr ? null : dateStr;
-    renderCalendario();
     renderLista();
   }
 
@@ -685,7 +598,6 @@
     }
 
     closeModal();
-    renderCalendario();
     renderLista();
     toast(editId ? 'Sessão atualizada!' : 'Sessão adicionada!');
   };
@@ -696,7 +608,6 @@
     const res = await fetch(API, { method:'DELETE', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id, senha}) });
     if (res.status === 403) { alert('Senha incorreta.'); return; }
     sessoes = sessoes.filter(x=>x.id!==id);
-    renderCalendario();
     renderLista();
     toast('Sessão excluída');
   };
