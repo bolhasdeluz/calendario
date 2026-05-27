@@ -19,21 +19,18 @@
     --red: #b84040;
     --red-dim: rgba(184,64,64,0.08);
 
-    --interna:   #4a6fa5;
-    --atendimento: #6a9e6a;
-    --visita:    #9e6a9e;
-    --familia:   #c9963c;
-    --reuniao:   #6a8fa5;
+    --interna:    #4a6fa5;
+    --atendimento:#6a9e6a;
+    --visita:     #9e6a9e;
+    --familia:    #c9963c;
+    --reuniao:    #6a8fa5;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:transparent; color:var(--text); font-family:'Crimson Pro',Georgia,serif; font-size:17px; min-height:100vh; }
 
   /* HEADER */
   header { background:transparent; padding:20px 24px 18px; text-align:center; position:relative; }
-  
-  .btn-back { display:inline-block; margin-bottom:12px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.75); text-decoration:none; border:1px solid rgba(255,255,255,0.4); padding:5px 14px; border-radius:20px; transition:all 0.2s; }
-  .btn-back:hover { border-color:#fff; color:#fff; }
-  .header-ornament { font-size:13px; color:rgba(255,255,255,0.5); opacity:1; letter-spacing:12px; margin-bottom:5px; }
+  .header-ornament { font-size:13px; color:rgba(255,255,255,0.5); letter-spacing:12px; margin-bottom:5px; }
   h1 { font-family:'Cinzel',serif; font-size:clamp(20px,4vw,30px); font-weight:700; letter-spacing:0.08em; color:#ffffff; text-shadow:0 2px 16px rgba(0,0,0,0.2); }
   .header-sub { font-size:10px; color:rgba(255,255,255,0.65); letter-spacing:0.18em; text-transform:uppercase; margin-top:4px; font-family:'Cinzel',serif; }
 
@@ -43,70 +40,97 @@
   .filter-btn:hover { border-color:#c4396b; color:#c4396b; }
   .filter-btn.active { background:#8a1a40; border-color:#8a1a40; color:#ffffff; }
   .filter-btn .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-  .dot-interna { background:var(--interna); }
-  .dot-atendimento { background:var(--atendimento); }
-  .dot-visita { background:var(--visita); }
-  .dot-familia { background:var(--familia); }
-  .dot-reuniao { background:var(--reuniao); }
+  .dot-interna    { background:var(--interna); }
+  .dot-atendimento{ background:var(--atendimento); }
+  .dot-visita     { background:var(--visita); }
+  .dot-familia    { background:var(--familia); }
+  .dot-reuniao    { background:var(--reuniao); }
+  .filter-count { background:rgba(255,255,255,0.25); border-radius:10px; padding:1px 5px; font-size:8px; line-height:1.4; }
+  .filter-btn.active .filter-count { background:rgba(255,255,255,0.2); }
+
   .spacer { flex:1; }
+
+  /* SEARCH */
+  .search-wrap { position:relative; }
+  .search-input { background:rgba(255,255,255,0.92); border:1px solid rgba(196,57,107,0.25); color:#2a1a22; padding:8px 30px 8px 11px; border-radius:6px; font-family:'Crimson Pro',serif; font-size:15px; width:180px; outline:none; transition:all 0.2s; }
+  .search-input::placeholder { color:rgba(80,30,50,0.4); font-style:italic; }
+  .search-input:focus { border-color:#c4396b; width:220px; }
+  .search-clear { position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(80,30,50,0.4); cursor:pointer; font-size:13px; display:none; line-height:1; padding:0; }
+  .search-clear.visible { display:block; }
+
+  /* TOGGLES */
+  .toggle-passadas { background:rgba(255,255,255,0.9); border:1px solid rgba(196,57,107,0.25); color:#8a3050; padding:8px 13px; border-radius:6px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; transition:all 0.2s; white-space:nowrap; }
+  .toggle-passadas:hover { border-color:#c4396b; color:#c4396b; }
+  .toggle-passadas.active { background:rgba(80,30,50,0.12); border-color:rgba(80,30,50,0.3); color:rgba(80,30,50,0.7); }
+
+  .btn-import { background:rgba(255,255,255,0.9); border:1px solid rgba(196,57,107,0.25); color:#8a3050; padding:8px 14px; border-radius:6px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; transition:all 0.2s; white-space:nowrap; }
+  .btn-import:hover { border-color:#c4396b; color:#c4396b; }
   .btn-add { background:#8a1a40; border:none; color:#ffffff; padding:8px 18px; border-radius:6px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; font-weight:700; transition:all 0.2s; white-space:nowrap; }
   .btn-add:hover { background:#c4396b; }
 
   /* MAIN LAYOUT */
   .main { max-width:720px; margin:18px auto 60px; padding:0 16px; }
 
-  /* SIDEBAR LIST */
+  /* LIST */
   .sessoes-list { display:flex; flex-direction:column; gap:8px; }
   .mes-header { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.18em; color:#8a1a40; text-transform:uppercase; padding:16px 2px 6px; border-bottom:1px solid rgba(196,57,107,0.15); margin-bottom:2px; }
   .mes-header:first-child { padding-top:4px; }
 
   .sessao-item { background:#ffffff; border:1px solid rgba(196,57,107,0.15); border-radius:8px; padding:12px 14px; border-left:3px solid var(--gold); transition:all 0.2s; animation:fadeIn 0.25s ease both; }
+  .sessao-item.passada { opacity:0.6; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
   .sessao-item:hover { border-color:rgba(196,57,107,0.35); box-shadow:0 4px 20px rgba(196,57,107,0.08); }
-  .sessao-item.tipo-interna { border-left-color:var(--interna); }
-  .sessao-item.tipo-atendimento { border-left-color:var(--atendimento); }
-  .sessao-item.tipo-visita { border-left-color:var(--visita); }
-  .sessao-item.tipo-familia { border-left-color:var(--familia); }
+  .sessao-item.tipo-interna    { border-left-color:var(--interna); }
+  .sessao-item.tipo-atendimento{ border-left-color:var(--atendimento); }
+  .sessao-item.tipo-visita     { border-left-color:var(--visita); }
+  .sessao-item.tipo-familia    { border-left-color:var(--familia); }
+  .sessao-item.tipo-reuniao    { border-left-color:var(--reuniao); }
 
   .si-header { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
   .si-date { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
   .si-day-num { font-family:'Cinzel',serif; font-size:22px; font-weight:700; color:#8a1a40; line-height:1; }
   .si-day-info { display:flex; flex-direction:column; gap:1px; }
-  .si-dow { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.12em; color:#c4396b; text-transform:uppercase; }
+  .si-dow  { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.12em; color:#c4396b; text-transform:uppercase; }
   .si-time { font-family:'Cinzel',serif; font-size:9px; color:rgba(80,30,50,0.5); letter-spacing:0.08em; }
   .si-name { font-family:'Cinzel',serif; font-size:13px; color:#8a1a40; line-height:1.2; }
   .si-tipo { font-size:9px; font-family:'Cinzel',serif; letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; opacity:0.7; }
-  .si-tipo.tipo-interna { color:var(--interna); }
+  .si-tipo.tipo-interna     { color:var(--interna); }
   .si-tipo.tipo-atendimento { color:var(--atendimento); }
-  .si-tipo.tipo-visita { color:var(--visita); }
-  .si-tipo.tipo-familia { color:var(--familia); }
+  .si-tipo.tipo-visita      { color:var(--visita); }
+  .si-tipo.tipo-familia     { color:var(--familia); }
+  .si-tipo.tipo-reuniao     { color:var(--reuniao); }
   .si-desc { font-size:13px; color:rgba(80,30,50,0.55); margin-top:5px; font-style:italic; line-height:1.5; }
   .si-resp { font-size:12px; color:rgba(80,30,50,0.5); margin-top:4px; }
   .si-actions { display:flex; gap:4px; flex-shrink:0; }
   .icon-btn { background:none; border:1px solid rgba(196,57,107,0.2); color:#c4396b; width:24px; height:24px; border-radius:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:11px; transition:all 0.18s; }
-  .icon-btn:hover { border-color:#c4396b; color:#c4396b; }
+  .icon-btn:hover { border-color:#c4396b; }
   .icon-btn.del:hover { border-color:var(--red); color:var(--red); background:var(--red-dim); }
+
+  .tambor-badge { display:inline-flex; align-items:center; gap:4px; margin-top:5px; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; padding:2px 9px; border-radius:20px; }
+  .tambor-confirmado  { background:rgba(106,158,106,0.12); border:1px solid rgba(106,158,106,0.3); color:#8ecf8e; }
+  .tambor-arrecadacao { background:rgba(196,57,107,0.08); border:1px solid rgba(196,57,107,0.25); color:#c4396b; }
+  .tambor-nao         { background:rgba(184,64,64,0.1); border:1px solid rgba(184,64,64,0.25); color:#b84040; }
 
   .empty { text-align:center; padding:30px 20px; color:rgba(80,30,50,0.5); font-size:14px; }
 
-  /* MODAL */
+  /* ── MODAL BASE ──────────────────────────────── */
   .overlay { display:none; position:fixed; inset:0; background:rgba(40,10,20,0.45); z-index:100; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(4px); }
   .overlay.open { display:flex; }
   .modal { background:#ffffff; border:1px solid rgba(196,57,107,0.15); border-top:3px solid #c4396b; border-radius:12px; box-shadow:0 8px 40px rgba(196,57,107,0.12); width:100%; max-width:480px; max-height:90vh; overflow-y:auto; padding:24px 20px; position:relative; }
   .modal h2 { font-family:'Cinzel',serif; font-size:16px; color:#8a1a40; margin-bottom:18px; letter-spacing:0.06em; }
   .form-row { margin-bottom:13px; }
   label { display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:5px; }
-  input[type=text],input[type=date],input[type=time],input[type=password],textarea,select { width:100%; background:#fff8fa; border:1px solid rgba(196,57,107,0.2); color:#2a1a22; padding:9px 11px; border-radius:6px; font-family:'Crimson Pro',serif; font-size:16px; outline:none; transition:border-color 0.2s; }
+  input[type=text],input[type=date],input[type=time],input[type=password],textarea,select {
+    width:100%; background:#fff8fa; border:1px solid rgba(196,57,107,0.2); color:#2a1a22;
+    padding:9px 11px; border-radius:6px; font-family:'Crimson Pro',serif; font-size:16px;
+    outline:none; transition:border-color 0.2s;
+  }
   input:focus,textarea:focus,select:focus { border-color:#c4396b; }
   input[type=date]::-webkit-calendar-picker-indicator,
   input[type=time]::-webkit-calendar-picker-indicator {
     filter: invert(0.3) sepia(1) saturate(3) hue-rotate(290deg);
-    cursor: pointer;
-    opacity: 0.7;
+    cursor:pointer; opacity:0.7;
   }
-  input[type=date]::-webkit-calendar-picker-indicator:hover,
-  input[type=time]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
-
   textarea { resize:vertical; min-height:80px; line-height:1.6; }
   select option { background:#ffffff; color:#2a1a22; }
   .row-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
@@ -119,33 +143,48 @@
   .btn-close-modal:hover { border-color:var(--red); color:var(--red); }
   .senha-err { color:#b84040; font-size:12px; margin-top:5px; display:none; }
 
-  /* TOAST */
-  .toast { position:fixed; bottom:20px; right:20px; background:#ffffff; border:1px solid #c4396b; color:#8a1a40; box-shadow:0 4px 20px rgba(196,57,107,0.12); padding:9px 15px; border-radius:7px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:.08em; z-index:200; opacity:0; transform:translateY(8px); transition:all .25s; pointer-events:none; }
-  .toast.show { opacity:1; transform:translateY(0); }
+  /* ── MODAL DE CONFIRMAÇÃO DE EXCLUSÃO ──────── */
+  .confirm-overlay { display:none; position:fixed; inset:0; background:rgba(40,10,20,0.5); z-index:150; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(4px); }
+  .confirm-overlay.open { display:flex; }
+  .confirm-modal { background:#ffffff; border:1px solid rgba(184,64,64,0.25); border-top:3px solid var(--red); border-radius:12px; box-shadow:0 8px 40px rgba(184,64,64,0.15); width:100%; max-width:380px; padding:24px 20px; }
+  .confirm-modal h3 { font-family:'Cinzel',serif; font-size:14px; color:#8a1a40; margin-bottom:8px; letter-spacing:0.06em; }
+  .confirm-modal p { font-size:14px; color:rgba(80,30,50,0.7); line-height:1.55; margin-bottom:16px; }
+  .confirm-modal .sessao-nome { font-weight:600; color:#2a1a22; font-style:italic; }
+  .confirm-senha-row { margin-bottom:14px; }
+  .confirm-footer { display:flex; justify-content:flex-end; gap:8px; }
+  .btn-del-confirm { background:var(--red); border:none; color:#ffffff; padding:8px 18px; border-radius:6px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; font-weight:700; transition:all 0.2s; }
+  .btn-del-confirm:hover { background:#c43030; }
 
-  .tambor-badge { display:inline-flex; align-items:center; gap:4px; margin-top:5px; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; padding:2px 9px; border-radius:20px; }
-  .tambor-confirmado { background:rgba(106,158,106,0.12); border:1px solid rgba(106,158,106,0.3); color:#8ecf8e; }
-  .tambor-arrecadacao { background:rgba(196,57,107,0.08); border:1px solid rgba(196,57,107,0.25); color:#c4396b; }
-  .tambor-nao { background:rgba(184,64,64,0.1); border:1px solid rgba(184,64,64,0.25); color:#b84040; }
-  .btn-import { background:rgba(255,255,255,0.9); border:1px solid rgba(196,57,107,0.25); color:#8a3050; padding:8px 14px; border-radius:6px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em; transition:all 0.2s; white-space:nowrap; }
-  .btn-import:hover { border-color:#c4396b; color:#c4396b; }
+  /* ── IMPORT MODAL ──────────────────────────── */
   .import-overlay { display:none; position:fixed; inset:0; background:rgba(40,10,20,0.5); z-index:200; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(4px); }
   .import-overlay.open { display:flex; }
   .import-modal { background:#ffffff; border:1px solid rgba(196,57,107,0.15); border-top:3px solid #c4396b; border-radius:12px; box-shadow:0 8px 40px rgba(196,57,107,0.12); width:100%; max-width:560px; max-height:85vh; display:flex; flex-direction:column; padding:22px 20px; position:relative; }
   .import-modal h2 { font-family:'Cinzel',serif; font-size:15px; color:#8a1a40; margin-bottom:6px; letter-spacing:0.06em; }
-  .import-sub { font-size:13px; color:rgba(80,30,50,0.6); margin-bottom:14px; }
+  .import-sub  { font-size:13px; color:rgba(80,30,50,0.6); margin-bottom:14px; }
   .import-list { overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
   .import-item { background:#fff5f8; border:1px solid rgba(196,57,107,0.15); border-radius:6px; padding:8px 12px; display:flex; align-items:center; gap:10px; font-size:13px; }
   .import-item input[type=checkbox] { accent-color:var(--gold); width:15px; height:15px; flex-shrink:0; cursor:pointer; }
   .import-item-info { flex:1; min-width:0; }
   .import-item-name { color:#2a1a22; font-family:'Cinzel',serif; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .import-item-date { color:rgba(80,30,50,0.5); font-size:11px; margin-top:1px; }
+  .import-item-tipo { margin-top:3px; }
+  .import-tipo-tag { font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.08em; padding:2px 7px; border-radius:10px; border:1px solid; display:inline-block; }
+  .import-tipo-Interna     { color:var(--interna);    border-color:var(--interna);    background:rgba(74,111,165,0.07); }
+  .import-tipo-Atendimento { color:var(--atendimento);border-color:var(--atendimento);background:rgba(106,158,106,0.07); }
+  .import-tipo-Visita      { color:var(--visita);     border-color:var(--visita);     background:rgba(158,106,158,0.07); }
+  .import-tipo-Familia     { color:var(--familia);    border-color:var(--familia);    background:rgba(201,150,60,0.07); }
+  .import-tipo-Reuniao     { color:var(--reuniao);    border-color:var(--reuniao);    background:rgba(106,143,165,0.07); }
   .import-footer { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  .import-senha { flex:1; min-width:140px; background:#fff8fa; border:1px solid rgba(196,57,107,0.2); color:#2a1a22; padding:8px 11px; border-radius:6px; font-family:'Crimson Pro',serif; font-size:15px; outline:none; }
+  .import-senha  { flex:1; min-width:140px; background:#fff8fa; border:1px solid rgba(196,57,107,0.2); color:#2a1a22; padding:8px 11px; border-radius:6px; font-family:'Crimson Pro',serif; font-size:15px; outline:none; }
   .import-senha:focus { border-color:#c4396b; }
   .import-count { font-family:'Cinzel',serif; font-size:9px; color:rgba(80,30,50,0.5); letter-spacing:0.08em; }
   .btn-sel-all { background:rgba(255,255,255,0.9); border:1px solid rgba(196,57,107,0.2); color:#8a3050; padding:6px 12px; border-radius:5px; cursor:pointer; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.06em; transition:all 0.2s; }
   .btn-sel-all:hover { border-color:#c4396b; color:#c4396b; }
+
+  /* ── TOAST ──────────────────────────────────── */
+  .toast { position:fixed; bottom:20px; right:20px; background:#ffffff; border:1px solid #c4396b; color:#8a1a40; box-shadow:0 4px 20px rgba(196,57,107,0.12); padding:9px 15px; border-radius:7px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:.08em; z-index:300; opacity:0; transform:translateY(8px); transition:all .25s; pointer-events:none; }
+  .toast.show { opacity:1; transform:translateY(0); }
+
   .loading { text-align:center; padding:40px; color:var(--text-dim); }
   .spinner { width:20px; height:20px; border:2px solid rgba(196,57,107,0.15); border-top-color:#c4396b; border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 10px; }
   @keyframes spin { to{transform:rotate(360deg)} }
@@ -160,16 +199,27 @@
 </header>
 
 <div class="controls">
-  <button class="filter-btn active" id="fTodos" onclick="setFiltro('')">Todos</button>
-  <button class="filter-btn" id="fInterna" onclick="setFiltro('Interna')"><span class="dot dot-interna"></span>Internas</button>
-  <button class="filter-btn" id="fAtendimento" onclick="setFiltro('Atendimento')"><span class="dot dot-atendimento"></span>Atendimento</button>
-  <button class="filter-btn" id="fVisita" onclick="setFiltro('Visita')"><span class="dot dot-visita"></span>Visita</button>
-  <button class="filter-btn" id="fFamilia" onclick="setFiltro('Familia')"><span class="dot dot-familia"></span>Família</button>
-  <button class="filter-btn" id="fReuniao" onclick="setFiltro('Reuniao')"><span class="dot dot-reuniao"></span>Reunião</button>
+  <button class="filter-btn active" id="fTodos"       onclick="setFiltro('')">Todos <span class="filter-count" id="cnt-todos"></span></button>
+  <button class="filter-btn"        id="fInterna"     onclick="setFiltro('Interna')"><span class="dot dot-interna"></span>Internas <span class="filter-count" id="cnt-Interna"></span></button>
+  <button class="filter-btn"        id="fAtendimento" onclick="setFiltro('Atendimento')"><span class="dot dot-atendimento"></span>Atendimento <span class="filter-count" id="cnt-Atendimento"></span></button>
+  <button class="filter-btn"        id="fVisita"      onclick="setFiltro('Visita')"><span class="dot dot-visita"></span>Visita <span class="filter-count" id="cnt-Visita"></span></button>
+  <button class="filter-btn"        id="fFamilia"     onclick="setFiltro('Familia')"><span class="dot dot-familia"></span>Família <span class="filter-count" id="cnt-Familia"></span></button>
+  <button class="filter-btn"        id="fReuniao"     onclick="setFiltro('Reuniao')"><span class="dot dot-reuniao"></span>Reunião <span class="filter-count" id="cnt-Reuniao"></span></button>
   <div class="spacer"></div>
+
+  <!-- BUSCA -->
+  <div class="search-wrap">
+    <input class="search-input" id="searchInput" type="text" placeholder="Buscar sessão…"
+           oninput="onSearch(this.value)">
+    <button class="search-clear" id="searchClear" onclick="limparBusca()" title="Limpar">✕</button>
+  </div>
+
+  <!-- PASSADAS -->
+  <button class="toggle-passadas" id="btnPassadas" onclick="togglePassadas()">📜 Passadas</button>
+
   <input type="file" id="icsInput" accept=".ics" style="display:none" onchange="importarICS(this)">
   <button class="btn-import" onclick="document.getElementById('icsInput').click()">⬆ Importar .ics</button>
-  <button class="btn-add" onclick="openModal()">+ Nova Sessão</button>
+  <button class="btn-add"    onclick="openModal()">+ Nova Sessão</button>
 </div>
 
 <div class="main">
@@ -178,7 +228,7 @@
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- ── MODAL NOVA/EDITAR ──────────────────────── -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <button class="btn-close-modal" onclick="closeModal()">✕</button>
@@ -187,7 +237,7 @@
 
     <div class="form-row">
       <label>Nome da Sessão *</label>
-      <input type="text" id="fNome" placeholder="ex: Gira de Pretos Velhos...">
+      <input type="text" id="fNome" placeholder="ex: Gira de Pretos Velhos…">
     </div>
     <div class="row-2">
       <div class="form-row">
@@ -212,11 +262,11 @@
     </div>
     <div class="form-row">
       <label>Descrição / Observações</label>
-      <textarea id="fDesc" placeholder="Detalhes, avisos, o que levar..."></textarea>
+      <textarea id="fDesc" placeholder="Detalhes, avisos, o que levar…"></textarea>
     </div>
     <div class="form-row">
       <label>Responsável</label>
-      <input type="text" id="fResp" placeholder="Quem organiza essa sessão...">
+      <input type="text" id="fResp" placeholder="Quem organiza essa sessão…">
     </div>
     <div class="form-row">
       <label>Tambor</label>
@@ -235,17 +285,34 @@
 
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="salvar()">Salvar Sessão</button>
+      <button class="btn-save"   onclick="salvar()">Salvar Sessão</button>
     </div>
   </div>
 </div>
 
-<!-- IMPORT MODAL -->
+<!-- ── MODAL CONFIRMAÇÃO DE EXCLUSÃO ─────────── -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-modal">
+    <h3>Excluir sessão</h3>
+    <p>Tem certeza que deseja excluir <span class="sessao-nome" id="confirmNome"></span>? Esta ação não pode ser desfeita.</p>
+    <div class="confirm-senha-row">
+      <label>Senha do terreiro</label>
+      <input type="password" id="confirmSenha" placeholder="Digite a senha para confirmar">
+      <div class="senha-err" id="confirmSenhaErr">Senha incorreta, tente novamente.</div>
+    </div>
+    <div class="confirm-footer">
+      <button class="btn-cancel"     onclick="fecharConfirm()">Cancelar</button>
+      <button class="btn-del-confirm" onclick="confirmarDelete()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── IMPORT MODAL ───────────────────────────── -->
 <div class="import-overlay" id="importOverlay">
   <div class="import-modal">
     <button class="btn-close-modal" onclick="fecharImport()">✕</button>
     <h2>Importar do Google Calendar</h2>
-    <div class="import-sub" id="importSub">Carregando eventos...</div>
+    <div class="import-sub" id="importSub">Carregando eventos…</div>
     <div class="import-list" id="importList"></div>
     <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
       <button class="btn-sel-all" onclick="selecionarTodos(true)">Selecionar todos</button>
@@ -255,7 +322,7 @@
     <div class="import-footer">
       <input type="password" class="import-senha" id="importSenha" placeholder="Senha do terreiro">
       <button class="btn-cancel" onclick="fecharImport()">Cancelar</button>
-      <button class="btn-save" onclick="confirmarImport()">Importar selecionados</button>
+      <button class="btn-save"   onclick="confirmarImport()">Importar selecionados</button>
     </div>
   </div>
 </div>
@@ -265,18 +332,291 @@
 <script>
   const API = '/api/sessoes';
   let sessoes = [];
-  let filtroTipo = '';
-  let selectedDate = null;
+  let filtroTipo   = '';
+  let buscaTexto   = '';
+  let mostrarPassadas = false;
+  let deletarId    = null;
 
   const hoje = new Date();
-  let viewYear = hoje.getFullYear();
-  let viewMonth = hoje.getMonth();
+  const todayStr = fmtDate(hoje);
 
-  const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  const TIPO_LABEL = { Interna:'Sessão Interna', Atendimento:'Sessão com Atendimento', Visita:'Sessão de Visita', Familia:'Sessão da Família', Reuniao:'Reunião' };
+  const MESES     = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const DIAS_SEMANA = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  const TIPO_LABEL  = { Interna:'Sessão Interna', Atendimento:'Sessão com Atendimento', Visita:'Sessão de Visita', Familia:'Sessão da Família', Reuniao:'Reunião' };
+  const TAMBOR_LABEL= { confirmado:'✅ Tambor confirmado', arrecadacao:'🪘 Depende de arrecadação', nao:'❌ Sem tambor' };
 
+  // ── Detecção automática de tipo por palavras-chave ──────────────
+  const TIPO_KEYWORDS = {
+    Interna:     ['interna','gira interna','trabalho interno','trabalho de corrente'],
+    Atendimento: ['atendimento','consulta','passes','desenvolvimento','atende'],
+    Visita:      ['visita','visitantes','aberta','pública','publica'],
+    Familia:     ['família','familia','filhos da casa','filhos'],
+    Reuniao:     ['reunião','reuniao','reuniões','reunioes','encontro','planejamento','administrativo'],
+  };
 
-  // ---- IMPORTAR ICS ----
+  function detectarTipo(nome) {
+    const n = nome.toLowerCase();
+    for (const [tipo, kws] of Object.entries(TIPO_KEYWORDS)) {
+      if (kws.some(kw => n.includes(kw))) return tipo;
+    }
+    return '';
+  }
+
+  // ── LOAD ────────────────────────────────────────────────────────
+  async function load() {
+    try {
+      const res = await fetch(API);
+      sessoes = await res.json();
+      renderLista();
+    } catch {
+      document.getElementById('sidebarList').innerHTML = '<div class="empty">Erro ao carregar.</div>';
+    }
+  }
+
+  // ── FILTRO ──────────────────────────────────────────────────────
+  window.setFiltro = (tipo) => {
+    filtroTipo = tipo;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    const map = {'':'fTodos','Interna':'fInterna','Atendimento':'fAtendimento','Visita':'fVisita','Familia':'fFamilia','Reuniao':'fReuniao'};
+    document.getElementById(map[tipo]).classList.add('active');
+    renderLista();
+  };
+
+  // ── BUSCA ───────────────────────────────────────────────────────
+  window.onSearch = (val) => {
+    buscaTexto = val.toLowerCase().trim();
+    document.getElementById('searchClear').classList.toggle('visible', buscaTexto.length > 0);
+    renderLista();
+  };
+  window.limparBusca = () => {
+    document.getElementById('searchInput').value = '';
+    onSearch('');
+  };
+
+  // ── TOGGLE PASSADAS ─────────────────────────────────────────────
+  window.togglePassadas = () => {
+    mostrarPassadas = !mostrarPassadas;
+    document.getElementById('btnPassadas').classList.toggle('active', mostrarPassadas);
+    renderLista();
+  };
+
+  // ── RENDER ──────────────────────────────────────────────────────
+  function renderLista() {
+    // Aplica filtros
+    let lista = sessoes.filter(s => {
+      if (filtroTipo && s.tipo !== filtroTipo) return false;
+      if (!mostrarPassadas && s.data < todayStr) return false;
+      if (buscaTexto) {
+        const haystack = [s.nome, s.descricao, s.responsavel].join(' ').toLowerCase();
+        if (!haystack.includes(buscaTexto)) return false;
+      }
+      return true;
+    });
+
+    // Atualiza contadores
+    atualizarContadores();
+
+    const el = document.getElementById('sidebarList');
+    if (lista.length === 0) {
+      const msg = buscaTexto
+        ? `Nenhuma sessão encontrada para "<strong>${esc(buscaTexto)}</strong>".`
+        : mostrarPassadas
+          ? 'Nenhuma sessão cadastrada.'
+          : 'Nenhuma sessão futura. Clique em <em>📜 Passadas</em> para ver o histórico.';
+      el.innerHTML = `<div class="empty">${msg}</div>`;
+      return;
+    }
+
+    // Agrupa por mês
+    const grupos = {};
+    lista.sort((a,b) => mostrarPassadas ? b.data.localeCompare(a.data) : a.data.localeCompare(b.data))
+         .forEach(s => {
+           const key = s.data.slice(0,7);
+           if (!grupos[key]) grupos[key] = [];
+           grupos[key].push(s);
+         });
+
+    let html = '';
+    Object.keys(grupos).sort((a,b) => mostrarPassadas ? b.localeCompare(a) : a.localeCompare(b))
+      .forEach(mesKey => {
+        const [y, m] = mesKey.split('-');
+        html += `<div class="mes-header">${MESES[parseInt(m)-1]} ${y}</div>`;
+        grupos[mesKey].forEach(s => {
+          const [sy, sm, sd] = s.data.split('-');
+          const dataObj = new Date(parseInt(sy), parseInt(sm)-1, parseInt(sd));
+          const dow = DIAS_SEMANA[dataObj.getDay()];
+          const tipoClass = 'tipo-' + (s.tipo||'').toLowerCase();
+          const passada = s.data < todayStr ? 'passada' : '';
+          html += `
+          <div class="sessao-item ${tipoClass} ${passada}">
+            <div class="si-header">
+              <div style="display:flex;gap:12px;align-items:center;flex:1;min-width:0">
+                <div class="si-date">
+                  <div class="si-day-num">${sd}</div>
+                  <div class="si-day-info">
+                    <div class="si-dow">${dow}</div>
+                    <div class="si-time">${s.hora||''}</div>
+                  </div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div class="si-name">${highlight(esc(s.nome))}</div>
+                  <div class="si-tipo ${tipoClass}">${TIPO_LABEL[s.tipo]||s.tipo||''}</div>
+                  ${s.tambor ? `<div class="tambor-badge tambor-${s.tambor}">${TAMBOR_LABEL[s.tambor]||''}</div>` : ''}
+                </div>
+              </div>
+              <div class="si-actions">
+                <button class="icon-btn" onclick="gerarICS('${s.id}')" title="Adicionar à agenda">📅</button>
+                <button class="icon-btn" onclick="openEdit('${s.id}')"  title="Editar">✎</button>
+                <button class="icon-btn del" onclick="abrirConfirmDelete('${s.id}')" title="Excluir">✕</button>
+              </div>
+            </div>
+            ${s.descricao  ? `<div class="si-desc">${highlight(esc(s.descricao))}</div>` : ''}
+            ${s.responsavel? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
+          </div>`;
+        });
+      });
+
+    el.innerHTML = html;
+  }
+
+  // Destaca termo buscado
+  function highlight(text) {
+    if (!buscaTexto) return text;
+    const re = new RegExp(`(${buscaTexto.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    return text.replace(re, '<mark style="background:rgba(196,57,107,0.15);border-radius:2px;padding:0 1px">$1</mark>');
+  }
+
+  // Contadores nos botões
+  function atualizarContadores() {
+    const tipos = ['','Interna','Atendimento','Visita','Familia','Reuniao'];
+    const idMap  = {'':'cnt-todos','Interna':'cnt-Interna','Atendimento':'cnt-Atendimento','Visita':'cnt-Visita','Familia':'cnt-Familia','Reuniao':'cnt-Reuniao'};
+    tipos.forEach(t => {
+      const n = sessoes.filter(s => (!t || s.tipo===t) && s.data >= todayStr).length;
+      const el = document.getElementById(idMap[t]);
+      if (el) el.textContent = n || '';
+    });
+  }
+
+  // ── MODAL NOVA/EDITAR ───────────────────────────────────────────
+  window.openModal = () => {
+    document.getElementById('modalTitle').textContent = 'Nova Sessão';
+    document.getElementById('editId').value = '';
+    document.getElementById('fNome').value  = '';
+    document.getElementById('fData').value  = todayStr;
+    document.getElementById('fHora').value  = '20:30';
+    document.getElementById('fTipo').value  = filtroTipo || '';
+    document.getElementById('fDesc').value  = '';
+    document.getElementById('fResp').value  = '';
+    document.getElementById('fTambor').value= '';
+    document.getElementById('fSenha').value = '';
+    document.getElementById('senhaErr').style.display = 'none';
+    document.getElementById('overlay').classList.add('open');
+    setTimeout(() => document.getElementById('fNome').focus(), 80);
+  };
+
+  window.openEdit = (id) => {
+    const s = sessoes.find(x => x.id === id);
+    if (!s) return;
+    document.getElementById('modalTitle').textContent = 'Editar Sessão';
+    document.getElementById('editId').value = id;
+    document.getElementById('fNome').value  = s.nome||'';
+    document.getElementById('fData').value  = s.data||'';
+    document.getElementById('fHora').value  = s.hora||'';
+    document.getElementById('fTipo').value  = s.tipo||'';
+    document.getElementById('fDesc').value  = s.descricao||'';
+    document.getElementById('fResp').value  = s.responsavel||'';
+    document.getElementById('fTambor').value= s.tambor||'';
+    document.getElementById('fSenha').value = '';
+    document.getElementById('senhaErr').style.display = 'none';
+    document.getElementById('overlay').classList.add('open');
+  };
+
+  window.closeModal = () => document.getElementById('overlay').classList.remove('open');
+
+  window.salvar = async () => {
+    const nome = document.getElementById('fNome').value.trim();
+    const data = document.getElementById('fData').value;
+    const tipo = document.getElementById('fTipo').value;
+    if (!nome || !data || !tipo) { alert('Preencha nome, data e tipo.'); return; }
+
+    const payload = {
+      nome, data,
+      hora:       document.getElementById('fHora').value,
+      tipo,
+      descricao:  document.getElementById('fDesc').value.trim(),
+      responsavel:document.getElementById('fResp').value.trim(),
+      tambor:     document.getElementById('fTambor').value,
+      senha:      document.getElementById('fSenha').value,
+    };
+
+    const editId = document.getElementById('editId').value;
+    if (editId) payload.id = editId;
+
+    const res = await fetch(API, {
+      method: editId ? 'PUT' : 'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+    if (res.status === 403) {
+      document.getElementById('senhaErr').style.display = 'block';
+      return;
+    }
+
+    if (editId) {
+      const idx = sessoes.findIndex(x => x.id === editId);
+      if (idx >= 0) sessoes[idx] = json;
+    } else {
+      sessoes.push(json);
+      sessoes.sort((a,b) => a.data.localeCompare(b.data));
+    }
+
+    closeModal();
+    renderLista();
+    toast(editId ? 'Sessão atualizada!' : 'Sessão adicionada!');
+  };
+
+  // ── MODAL DE EXCLUSÃO ───────────────────────────────────────────
+  window.abrirConfirmDelete = (id) => {
+    const s = sessoes.find(x => x.id === id);
+    if (!s) return;
+    deletarId = id;
+    document.getElementById('confirmNome').textContent = `"${s.nome}"`;
+    document.getElementById('confirmSenha').value = '';
+    document.getElementById('confirmSenhaErr').style.display = 'none';
+    document.getElementById('confirmOverlay').classList.add('open');
+    setTimeout(() => document.getElementById('confirmSenha').focus(), 80);
+  };
+
+  window.fecharConfirm = () => {
+    document.getElementById('confirmOverlay').classList.remove('open');
+    deletarId = null;
+  };
+
+  window.confirmarDelete = async () => {
+    if (!deletarId) return;
+    const senha = document.getElementById('confirmSenha').value;
+    if (!senha) { document.getElementById('confirmSenha').focus(); return; }
+
+    const res = await fetch(API, {
+      method:'DELETE',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ id: deletarId, senha })
+    });
+
+    if (res.status === 403) {
+      document.getElementById('confirmSenhaErr').style.display = 'block';
+      return;
+    }
+
+    sessoes = sessoes.filter(x => x.id !== deletarId);
+    fecharConfirm();
+    renderLista();
+    toast('Sessão excluída');
+  };
+
+  // ── IMPORTAR ICS ────────────────────────────────────────────────
   let importEventos = [];
 
   window.importarICS = (input) => {
@@ -294,96 +634,84 @@
   function parseICS(text) {
     const eventos = [];
     const blocks = text.split('BEGIN:VEVENT');
-    const hoje = new Date();
-    hoje.setHours(0,0,0,0);
+    const _hoje = new Date();
+    _hoje.setHours(0,0,0,0);
 
     for (let i = 1; i < blocks.length; i++) {
       const block = blocks[i];
-
       const get = (key) => {
         const match = block.match(new RegExp(key + '[^:]*:([^\r\n]+)'));
         return match ? match[1].trim() : '';
       };
 
       const summary = get('SUMMARY') || 'Sem título';
-      const desc = get('DESCRIPTION');
+      const desc    = get('DESCRIPTION');
       const dtstart = get('DTSTART');
-      const rrule = get('RRULE');
+      const rrule   = get('RRULE');
 
       if (!dtstart) continue;
 
-      const datas = expandirDatas(dtstart, rrule, hoje);
-
+      const datas = expandirDatas(dtstart, rrule, _hoje);
       datas.forEach(data => {
         const hora = extrairHora(dtstart);
-        eventos.push({ nome: summary, data, hora, descricao: desc, tipo: '', tambor: '' });
+        const tipoDetectado = detectarTipo(summary);
+        eventos.push({ nome:summary, data, hora, descricao:desc, tipo:tipoDetectado, tambor:'' });
       });
     }
 
-    // Sort by date and remove duplicates
     eventos.sort((a,b) => a.data.localeCompare(b.data));
     return eventos;
   }
 
   function extrairHora(dtstart) {
-    // DTSTART;TZID=...:20260101T210000 or DTSTART:20260101T210000Z
     const t = dtstart.replace(/.*:/, '');
     if (t.length >= 15) {
-      const h = t.slice(9,11);
-      const m = t.slice(11,13);
+      const h = t.slice(9,11), m = t.slice(11,13);
       if (h && m && !isNaN(h) && !isNaN(m)) return `${h}:${m}`;
     }
     return '';
   }
 
-  function expandirDatas(dtstart, rrule, hoje) {
+  function expandirDatas(dtstart, rrule, _hoje) {
     const dataBase = parseDTSTART(dtstart);
     if (!dataBase) return [];
-
     const datas = [];
-    const limite = new Date(hoje);
-    limite.setMonth(limite.getMonth() + 18); // próximos 18 meses
+    const limite = new Date(_hoje);
+    limite.setMonth(limite.getMonth() + 18);
 
     if (!rrule) {
-      if (dataBase >= hoje) datas.push(fmtDate(dataBase));
+      if (dataBase >= _hoje) datas.push(fmtDate(dataBase));
       return datas;
     }
 
-    const freq = (rrule.match(/FREQ=([^;]+)/) || [])[1];
+    const freq     = (rrule.match(/FREQ=([^;]+)/) || [])[1];
     const untilStr = (rrule.match(/UNTIL=([^;]+)/) || [])[1];
-    const until = untilStr ? parseDTSTART(untilStr) : limite;
-    const intervalMatch = rrule.match(/INTERVAL=(\d+)/);
-    const interval = intervalMatch ? parseInt(intervalMatch[1]) : 1;
-
+    const until    = untilStr ? parseDTSTART(untilStr) : limite;
+    const interval = parseInt((rrule.match(/INTERVAL=(\d+)/) || [,1])[1]);
     const cur = new Date(dataBase);
 
     for (let iter = 0; iter < 200; iter++) {
       if (cur > limite || (until && cur > until)) break;
-      if (cur >= hoje) datas.push(fmtDate(cur));
-
-      if (freq === 'YEARLY') cur.setFullYear(cur.getFullYear() + interval);
+      if (cur >= _hoje) datas.push(fmtDate(cur));
+      if      (freq === 'YEARLY')  cur.setFullYear(cur.getFullYear() + interval);
       else if (freq === 'MONTHLY') cur.setMonth(cur.getMonth() + interval);
-      else if (freq === 'WEEKLY') cur.setDate(cur.getDate() + 7 * interval);
-      else if (freq === 'DAILY') cur.setDate(cur.getDate() + interval);
+      else if (freq === 'WEEKLY')  cur.setDate(cur.getDate() + 7 * interval);
+      else if (freq === 'DAILY')   cur.setDate(cur.getDate() + interval);
       else break;
     }
-
     return datas;
   }
 
   function parseDTSTART(s) {
-    // Remove prefix like TZID=...: 
     const raw = s.replace(/.*:/, '').replace(/Z$/, '');
     if (raw.length < 8) return null;
-    const y = parseInt(raw.slice(0,4));
-    const m = parseInt(raw.slice(4,6)) - 1;
-    const d = parseInt(raw.slice(6,8));
-    return new Date(y, m, d);
+    return new Date(parseInt(raw.slice(0,4)), parseInt(raw.slice(4,6))-1, parseInt(raw.slice(6,8)));
   }
 
   function mostrarImport() {
     document.getElementById('importOverlay').classList.add('open');
-    document.getElementById('importSub').textContent = `${importEventos.length} eventos futuros encontrados. Selecione os que deseja importar:`;
+    document.getElementById('importSub').textContent =
+      `${importEventos.length} eventos futuros encontrados. Selecione os que deseja importar:`;
     atualizarListaImport();
   }
 
@@ -395,26 +723,31 @@
     }
     list.innerHTML = importEventos.map((ev, i) => {
       const [y,m,d] = ev.data.split('-');
+      const tipoTag = ev.tipo
+        ? `<span class="import-tipo-tag import-tipo-${ev.tipo}">${TIPO_LABEL[ev.tipo]||ev.tipo}</span>`
+        : `<span style="font-family:Cinzel,serif;font-size:8px;color:rgba(80,30,50,0.4);letter-spacing:0.06em">Tipo não detectado</span>`;
       return `<div class="import-item">
         <input type="checkbox" id="imp${i}" checked onchange="atualizarContador()">
         <div class="import-item-info">
           <div class="import-item-name">${esc(ev.nome)}</div>
           <div class="import-item-date">${d}/${m}/${y}${ev.hora ? ' · ' + ev.hora : ''}</div>
+          <div class="import-item-tipo">${tipoTag}</div>
         </div>
       </div>`;
     }).join('');
-    atualizarContador();
+    atualizarContadorImport();
   }
 
-  function atualizarContador() {
+  function atualizarContadorImport() {
     const total = importEventos.length;
-    const selecionados = document.querySelectorAll('#importList input:checked').length;
-    document.getElementById('importCount').textContent = `${selecionados} de ${total} selecionados`;
+    const sel   = document.querySelectorAll('#importList input:checked').length;
+    document.getElementById('importCount').textContent = `${sel} de ${total} selecionados`;
   }
+  window.atualizarContador = atualizarContadorImport; // alias do HTML
 
   window.selecionarTodos = (val) => {
     document.querySelectorAll('#importList input[type=checkbox]').forEach(c => c.checked = val);
-    atualizarContador();
+    atualizarContadorImport();
   };
 
   window.fecharImport = () => {
@@ -425,21 +758,20 @@
   window.confirmarImport = async () => {
     const senha = document.getElementById('importSenha').value;
     if (!senha) { alert('Digite a senha do terreiro.'); return; }
-
     const checkboxes = document.querySelectorAll('#importList input[type=checkbox]');
-    const selecionados = importEventos.filter((_, i) => checkboxes[i]?.checked);
+    const selecionados = importEventos.filter((_,i) => checkboxes[i]?.checked);
     if (selecionados.length === 0) { alert('Selecione ao menos um evento.'); return; }
 
     const btn = document.querySelector('.import-overlay .btn-save');
-    btn.textContent = 'Importando...';
+    btn.textContent = 'Importando…';
     btn.disabled = true;
 
     let ok = 0, err = 0;
     for (const ev of selecionados) {
       try {
         const res = await fetch(API, {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
           body: JSON.stringify({ ...ev, senha })
         });
         if (res.status === 403) { alert('Senha incorreta.'); btn.textContent='Importar selecionados'; btn.disabled=false; return; }
@@ -448,278 +780,108 @@
       } catch { err++; }
     }
 
-    sessoes.sort((a,b)=>a.data.localeCompare(b.data));
+    sessoes.sort((a,b) => a.data.localeCompare(b.data));
     fecharImport();
     renderLista();
     btn.textContent = 'Importar selecionados';
     btn.disabled = false;
-    toast(`${ok} sessão(ões) importada(s)!${err ? ' ' + err + ' erros.' : ''}`);
+    toast(`${ok} sessão(ões) importada(s)!${err ? ' ' + err + ' erro(s).' : ''}`);
   };
 
-
+  // ── GERAR ICS ───────────────────────────────────────────────────
   function gerarICS(id) {
     const s = sessoes.find(x => x.id === id);
     if (!s) return;
 
     const isAndroid = /android/i.test(navigator.userAgent);
+    const [y,m,d]   = s.data.split('-');
+    const hora       = s.hora || '20:30';
+    const [h, min]   = hora.split(':');
+    const pad = n => String(n).padStart(2,'0');
+    const dtstart = `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
+    const dtend   = `${y}${pad(m)}${pad(d)}T${pad(parseInt(h)+2)}${pad(min)}00`;
+    const details = [
+      s.tipo        ? 'Tipo: ' + (TIPO_LABEL[s.tipo]||s.tipo)  : '',
+      s.responsavel ? 'Responsável: ' + s.responsavel           : '',
+      s.descricao   || ''
+    ].filter(Boolean).join(' | ');
 
     if (isAndroid) {
-      // Android: abre direto no Google Calendar
-      const [y, m, d] = s.data.split('-');
-      const hora = s.hora || '20:30';
-      const [h, min] = hora.split(':');
-      const pad = n => String(n).padStart(2,'0');
-      const dtstart = `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
-      const endH = String(parseInt(h) + 2).padStart(2,'0');
-      const dtend = `${y}${pad(m)}${pad(d)}T${endH}${pad(min)}00`;
-      const details = [
-        s.tipo ? ('Tipo: ' + (TIPO_LABEL[s.tipo]||s.tipo)) : '',
-        s.responsavel ? ('Responsável: ' + s.responsavel) : '',
-        s.descricao || ''
-      ].filter(Boolean).join(' | ');
-      const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-        + '&text=' + encodeURIComponent(s.nome)
-        + '&dates=' + dtstart + '/' + dtend
-        + '&details=' + encodeURIComponent(details)
-        + '&location=' + encodeURIComponent('Terreiro Bolhas de Luz');
-      window.open(url, '_blank');
+      window.open('https://calendar.google.com/calendar/render?action=TEMPLATE'
+        + '&text='     + encodeURIComponent(s.nome)
+        + '&dates='    + dtstart + '/' + dtend
+        + '&details='  + encodeURIComponent(details)
+        + '&location=' + encodeURIComponent('Terreiro Bolhas de Luz'), '_blank');
       return;
     }
 
-    // iOS e desktop: baixa .ics
-    const [y, m, d] = s.data.split('-');
-    const hora = s.hora || '20:30';
-    const [h, min] = hora.split(':');
-    const pad = n => String(n).padStart(2,'0');
-    const dtstart = `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
-    const endH = String(parseInt(h) + 2).padStart(2,'0');
-    const dtend = `${y}${pad(m)}${pad(d)}T${endH}${pad(min)}00`;
-    const TAMBOR_L = {confirmado:'Tambor: Confirmado', arrecadacao:'Tambor: Depende de arrecadacao', nao:'Tambor: Nao vai ter'};
+    const TAMBOR_L = { confirmado:'Tambor: Confirmado', arrecadacao:'Tambor: Depende de arrecadacao', nao:'Tambor: Nao vai ter' };
     const desc = [
-      s.tipo ? ('Tipo: ' + (TIPO_LABEL[s.tipo]||s.tipo)) : '',
-      s.tambor ? (TAMBOR_L[s.tambor]||'') : '',
-      s.responsavel ? ('Responsavel: ' + s.responsavel) : '',
-      s.descricao || ''
+      s.tipo        ? 'Tipo: ' + (TIPO_LABEL[s.tipo]||s.tipo) : '',
+      s.tambor      ? (TAMBOR_L[s.tambor]||'')                 : '',
+      s.responsavel ? 'Responsavel: ' + s.responsavel          : '',
+      s.descricao   || ''
     ].filter(Boolean).join('\\n');
+
     const CRLF = '\r\n';
     const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Bolhas de Luz//Calendario//PT',
+      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Bolhas de Luz//Calendario//PT',
       'BEGIN:VEVENT',
       'DTSTART;TZID=America/Sao_Paulo:' + dtstart,
-      'DTEND;TZID=America/Sao_Paulo:' + dtend,
-      'SUMMARY:' + s.nome,
+      'DTEND;TZID=America/Sao_Paulo:'   + dtend,
+      'SUMMARY:'     + s.nome,
       'DESCRIPTION:' + desc,
       'LOCATION:Terreiro Bolhas de Luz',
-      'UID:' + s.id + '@bolhasdeluz',
-      'END:VEVENT',
-      'END:VCALENDAR'
+      'UID:'         + s.id + '@bolhasdeluz',
+      'END:VEVENT','END:VCALENDAR'
     ].join(CRLF);
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = s.nome.replace(/[^a-z0-9]/gi, '-') + '.ics';
-    a.click();
+
+    const blob = new Blob([ics], { type:'text/calendar;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = s.nome.replace(/[^a-z0-9]/gi,'-') + '.ics'; a.click();
     URL.revokeObjectURL(url);
   }
   window.gerarICS = gerarICS;
 
-  // ---- LOAD ----
-  async function load() {
-    try {
-      const res = await fetch(API);
-      sessoes = await res.json();
-      renderLista();
-    } catch(e) {
-      document.getElementById('sidebarList').innerHTML = '<div class="empty">Erro ao carregar.</div>';
-    }
+  // ── UTILS ───────────────────────────────────────────────────────
+  function fmtDate(d) {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+  function esc(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2400);
   }
 
-  // ---- FILTRO ----
-  window.setFiltro = (tipo) => {
-    filtroTipo = tipo;
-    selectedDate = null;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    const map = {'':'fTodos','Interna':'fInterna','Atendimento':'fAtendimento','Visita':'fVisita','Familia':'fFamilia','Reuniao':'fReuniao'};
-    document.getElementById(map[tipo]).classList.add('active');
-    renderLista();
-  };
+  // ── FECHAR MODAIS COM ESC ────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (document.getElementById('confirmOverlay').classList.contains('open')) { fecharConfirm(); return; }
+    if (document.getElementById('importOverlay').classList.contains('open'))  { fecharImport();  return; }
+    if (document.getElementById('overlay').classList.contains('open'))        { closeModal();    return; }
+  });
 
-  // ---- CALENDÁRIO (removido) ----
-  window.mudarMes = (d) => {
-    viewMonth += d;
-    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
-    if (viewMonth < 0)  { viewMonth = 11; viewYear--; }
-    selectedDate = null;
-    renderLista();
-  };
+  // Fechar clicando no fundo
+  document.getElementById('overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('overlay')) closeModal();
+  });
+  document.getElementById('confirmOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('confirmOverlay')) fecharConfirm();
+  });
+  document.getElementById('importOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('importOverlay')) fecharImport();
+  });
 
-
-  function selectDay(dateStr) {
-    selectedDate = selectedDate === dateStr ? null : dateStr;
-    renderLista();
-  }
-
-  // ---- LISTA LATERAL ----
-  const DIAS_SEMANA = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-  const TAMBOR_LABEL = { confirmado:'✅ Tambor confirmado', arrecadacao:'🪘 Depende de arrecadação', nao:'❌ Sem tambor' };
-
-  function renderLista() {
-    const todayStr = fmtDate(hoje);
-    let lista = sessoes.filter(s => {
-      if (filtroTipo && s.tipo !== filtroTipo) return false;
-      return s.data >= todayStr;
-    });
-
-    const el = document.getElementById('sidebarList');
-    if (lista.length === 0) {
-      el.innerHTML = '<div class="empty">Nenhuma sessão encontrada.</div>';
-      return;
-    }
-
-    // Agrupa por mês
-    const grupos = {};
-    lista.forEach(s => {
-      const mesKey = s.data.slice(0, 7);
-      if (!grupos[mesKey]) grupos[mesKey] = [];
-      grupos[mesKey].push(s);
-    });
-
-    let html = '';
-    Object.keys(grupos).sort().forEach(mesKey => {
-      const [y, m] = mesKey.split('-');
-      html += `<div class="mes-header">${MESES[parseInt(m)-1]} ${y}</div>`;
-      grupos[mesKey].forEach(s => {
-        const [sy, sm, sd] = s.data.split('-');
-        const dataObj = new Date(parseInt(sy), parseInt(sm)-1, parseInt(sd));
-        const dow = DIAS_SEMANA[dataObj.getDay()];
-        const tipoClass = 'tipo-' + (s.tipo||'').toLowerCase();
-        html += `
-        <div class="sessao-item ${tipoClass}">
-          <div class="si-header">
-            <div style="display:flex;gap:12px;align-items:center;flex:1;min-width:0">
-              <div class="si-date">
-                <div class="si-day-num">${sd}</div>
-                <div class="si-day-info">
-                  <div class="si-dow">${dow}</div>
-                  <div class="si-time">${s.hora||''}</div>
-                </div>
-              </div>
-              <div style="flex:1;min-width:0">
-                <div class="si-name">${esc(s.nome)}</div>
-                <div class="si-tipo ${tipoClass}">${TIPO_LABEL[s.tipo]||s.tipo||''}</div>
-                ${s.tambor ? `<div class="tambor-badge tambor-${s.tambor}">${TAMBOR_LABEL[s.tambor]||''}</div>` : ''}
-              </div>
-            </div>
-            <div class="si-actions">
-              <button class="icon-btn agenda" onclick="gerarICS('${s.id}')" title="Adicionar à agenda">📅</button>
-              <button class="icon-btn" onclick="openEdit('${s.id}')" title="Editar">✎</button>
-              <button class="icon-btn del" onclick="deletar('${s.id}')" title="Excluir">✕</button>
-            </div>
-          </div>
-          ${s.descricao ? `<div class="si-desc">${esc(s.descricao)}</div>` : ''}
-          ${s.responsavel ? `<div class="si-resp">Resp.: ${esc(s.responsavel)}</div>` : ''}
-        </div>`;
-      });
-    });
-
-    el.innerHTML = html;
-  }
-
-  // ---- MODAL ----
-  window.openModal = () => {
-    document.getElementById('modalTitle').textContent = 'Nova Sessão';
-    document.getElementById('editId').value = '';
-    document.getElementById('fNome').value = '';
-    document.getElementById('fData').value = selectedDate || fmtDate(hoje);
-    document.getElementById('fHora').value = '20:30';
-    document.getElementById('fTipo').value = filtroTipo || '';
-    document.getElementById('fDesc').value = '';
-    document.getElementById('fResp').value = '';
-    document.getElementById('fTambor').value = '';
-    document.getElementById('fSenha').value = '';
-    document.getElementById('senhaErr').style.display = 'none';
-    document.getElementById('overlay').classList.add('open');
-  };
-
-  window.openEdit = (id) => {
-    const s = sessoes.find(x => x.id === id);
-    if (!s) return;
-    document.getElementById('modalTitle').textContent = 'Editar Sessão';
-    document.getElementById('editId').value = id;
-    document.getElementById('fNome').value = s.nome||'';
-    document.getElementById('fData').value = s.data||'';
-    document.getElementById('fHora').value = s.hora||'';
-    document.getElementById('fTipo').value = s.tipo||'';
-    document.getElementById('fDesc').value = s.descricao||'';
-    document.getElementById('fResp').value = s.responsavel||'';
-    document.getElementById('fTambor').value = s.tambor||'';
-    document.getElementById('fSenha').value = '';
-    document.getElementById('senhaErr').style.display = 'none';
-    document.getElementById('overlay').classList.add('open');
-  };
-
-  window.closeModal = () => document.getElementById('overlay').classList.remove('open');
-
-  window.salvar = async () => {
-    const nome = document.getElementById('fNome').value.trim();
-    const data = document.getElementById('fData').value;
-    const tipo = document.getElementById('fTipo').value;
-    if (!nome || !data || !tipo) { alert('Preencha nome, data e tipo.'); return; }
-
-    const payload = {
-      nome, data,
-      hora: document.getElementById('fHora').value,
-      tipo,
-      descricao: document.getElementById('fDesc').value.trim(),
-      responsavel: document.getElementById('fResp').value.trim(),
-      tambor: document.getElementById('fTambor').value,
-      senha: document.getElementById('fSenha').value,
-    };
-
-    const editId = document.getElementById('editId').value;
-    const method = editId ? 'PUT' : 'POST';
-    if (editId) payload.id = editId;
-
-    const res = await fetch(API, { method, headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-    const json = await res.json();
-
-    if (res.status === 403) {
-      document.getElementById('senhaErr').style.display = 'block';
-      return;
-    }
-
-    if (editId) {
-      const idx = sessoes.findIndex(x=>x.id===editId);
-      if (idx>=0) sessoes[idx] = json;
-    } else {
-      sessoes.push(json);
-      sessoes.sort((a,b)=>a.data.localeCompare(b.data));
-    }
-
-    closeModal();
-    renderLista();
-    toast(editId ? 'Sessão atualizada!' : 'Sessão adicionada!');
-  };
-
-  window.deletar = async (id) => {
-    const senha = prompt('Digite a senha para excluir:');
-    if (senha === null) return;
-    const res = await fetch(API, { method:'DELETE', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id, senha}) });
-    if (res.status === 403) { alert('Senha incorreta.'); return; }
-    sessoes = sessoes.filter(x=>x.id!==id);
-    renderLista();
-    toast('Sessão excluída');
-  };
-
-  // ---- UTILS ----
-  function fmtDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-  function esc(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function toast(msg) { const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2400); }
-
-  document.getElementById('overlay').addEventListener('click', e => { if(e.target===document.getElementById('overlay'))closeModal(); });
+  // Enter confirma exclusão
+  document.getElementById('confirmSenha').addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirmarDelete();
+  });
 
   load();
 </script>
